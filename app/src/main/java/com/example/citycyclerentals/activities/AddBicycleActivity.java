@@ -3,6 +3,7 @@ package com.example.citycyclerentals.activities;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -125,7 +126,10 @@ public class AddBicycleActivity extends AppCompatActivity {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
         byte[] imageBytes = byteArrayOutputStream.toByteArray();
-        return Base64.getEncoder().encodeToString(imageBytes);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return Base64.getEncoder().encodeToString(imageBytes);
+        }
+        return "";
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -20,7 +21,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.Glide;
 import com.example.citycyclerentals.R;
 import com.example.citycyclerentals.database.DatabaseHelper;
 import com.example.citycyclerentals.models.Customer;
@@ -109,7 +109,10 @@ public class ProfileFragment extends Fragment {
             // Load profile picture
             if (currentCustomer.getProfilePicture() != null && !currentCustomer.getProfilePicture().isEmpty()) {
                 try {
-                    byte[] decodedBytes = Base64.getDecoder().decode(currentCustomer.getProfilePicture());
+                    byte[] decodedBytes = null;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        decodedBytes = Base64.getDecoder().decode(currentCustomer.getProfilePicture());
+                    }
                     Bitmap bitmap = android.graphics.BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
                     ivProfilePicture.setImageBitmap(bitmap);
                 } catch (Exception e) {
@@ -182,6 +185,9 @@ public class ProfileFragment extends Fragment {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
         byte[] imageBytes = byteArrayOutputStream.toByteArray();
-        return Base64.getEncoder().encodeToString(imageBytes);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return Base64.getEncoder().encodeToString(imageBytes);
+        }
+        return "";
     }
 }

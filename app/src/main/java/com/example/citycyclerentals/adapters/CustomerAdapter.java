@@ -3,6 +3,7 @@ package com.example.citycyclerentals.adapters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +55,10 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
         // Load profile picture
         if (customer.getProfilePicture() != null && !customer.getProfilePicture().isEmpty()) {
             try {
-                byte[] decodedBytes = Base64.getDecoder().decode(customer.getProfilePicture());
+                byte[] decodedBytes = null;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    decodedBytes = Base64.getDecoder().decode(customer.getProfilePicture());
+                }
                 Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
                 holder.ivProfilePicture.setImageBitmap(bitmap);
             } catch (Exception e) {

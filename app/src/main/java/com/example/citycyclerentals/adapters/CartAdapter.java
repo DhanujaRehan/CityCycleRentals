@@ -1,6 +1,8 @@
 package com.example.citycyclerentals.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +12,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.citycyclerentals.R;
 import com.example.citycyclerentals.models.CartItem;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
@@ -48,16 +50,56 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.tvEndDate.setText("To: " + cartItem.getEndDate());
         holder.tvPrice.setText("$" + String.format("%.2f", cartItem.getTotalPrice()));
 
-        // Load image using Glide
+        // Load image using Base64 decoding
         if (cartItem.getBicycleImage() != null && !cartItem.getBicycleImage().isEmpty()) {
-            Glide.with(context)
-                    .load(cartItem.getBicycleImage())
-                    .placeholder(R.drawable.ic_bike)
-                    .error(R.drawable.ic_bike)
-                    .into(holder.ivBicycle);
+            try {
+                // Decode Base64 string to bitmap
+                byte[] decodedBytes = Base64.getDecoder().decode(cartItem.getBicycleImage());
+                Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+
+                if (bitmap != null) {
+                    // Create a scaled bitmap for better performance
+                    Bitmap scaledBitmap = createScaledBitmap(bitmap, 150, 150);
+                    holder.ivBicycle.setImageBitmap(scaledBitmap);
+
+                    // Recycle original bitmap to free memory
+                    if (bitmap != scaledBitmap) {
+                        bitmap.recycle();
+                    }
+                } else {
+                    holder.ivBicycle.setImageResource(R.drawable.ic_bike);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                holder.ivBicycle.setImageResource(R.drawable.ic_bike);
+            }
         } else {
             holder.ivBicycle.setImageResource(R.drawable.ic_bike);
         }
+    }
+
+    /**
+     * Create a scaled bitmap for better memory management
+     */
+    private Bitmap createScaledBitmap(Bitmap originalBitmap, int maxWidth, int maxHeight) {
+        int originalWidth = originalBitmap.getWidth();
+        int originalHeight = originalBitmap.getHeight();
+
+        // Calculate scaling factor
+        float scaleFactor = Math.min(
+                (float) maxWidth / originalWidth,
+                (float) maxHeight / originalHeight
+        );
+
+        // If the image is already smaller, don't scale up
+        if (scaleFactor >= 1.0f) {
+            return originalBitmap;
+        }
+
+        int newWidth = Math.round(originalWidth * scaleFactor);
+        int newHeight = Math.round(originalHeight * scaleFactor);
+
+        return Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
     }
 
     @Override
