@@ -1,11 +1,10 @@
-package com.example.citycyclerentals;
+package com.example.citycyclerentals.database;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.example.citycyclerentals.models.Bicycle;
 import com.example.citycyclerentals.models.CartItem;
