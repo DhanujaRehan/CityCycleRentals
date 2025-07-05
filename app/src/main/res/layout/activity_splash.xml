@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFF1CA"
+    android:gravity="center">
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/ic_bike"
+        android:layout_marginBottom="32dp"
+        android:contentDescription="CityCycle Logo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CityCycle Rentals"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:textColor="#2D4F2B"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Eco-friendly transportation for everyone"
+        android:textSize="16sp"
+        android:textColor="#708A58"
+        android:layout_marginBottom="48dp" />
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="#FFB823" />
+
+</LinearLayout>

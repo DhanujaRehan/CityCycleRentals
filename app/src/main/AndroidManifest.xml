@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
+            android:name=".activities.SplashActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.CustomerListActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.AddBicycleActivity"
             android:exported="false" />
         <activity
