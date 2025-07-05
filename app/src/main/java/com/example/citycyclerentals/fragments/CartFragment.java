@@ -1,66 +1,152 @@
 package com.example.citycyclerentals.fragments;
 
+import android.app.AlertDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.citycyclerentals.R;
+import com.example.citycyclerentals.adapters.CartAdapter;
+import com.example.citycyclerentals.database.DatabaseHelper;
+import com.example.citycyclerentals.models.CartItem;
+import com.example.citycyclerentals.models.RentalHistory;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CartFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+import static android.content.Context.MODE_PRIVATE;
+
 public class CartFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public CartFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CartFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CartFragment newInstance(String param1, String param2) {
-        CartFragment fragment = new CartFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private RecyclerView recyclerView;
+    private TextView tvTotalAmount, tvEmptyCart;
+    private Button btnCheckout;
+    private CartAdapter adapter;
+    private DatabaseHelper dbHelper;
+    private int customerId;
+    private List<CartItem> cartItems;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cart, container, false);
+        View view = inflater.inflate(R.layout.fragment_cart, container, false);
+
+        initializeViews(view);
+        dbHelper = new DatabaseHelper(getContext());
+
+        // Get customer ID from shared preferences
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserSession", MODE_PRIVATE);
+        customerId = sharedPreferences.getInt("user_id", 0);
+
+        setupRecyclerView();
+        loadCartItems();
+
+        btnCheckout.setOnClickListener(v -> showCheckoutDialog());
+
+        return view;
+    }
+
+    private void initializeViews(View view) {
+        recyclerView = view.findViewById(R.id.recyclerViewCart);
+        tvTotalAmount = view.findViewById(R.id.tvTotalAmount);
+        tvEmptyCart = view.findViewById(R.id.tvEmptyCart);
+        btnCheckout = view.findViewById(R.id.btnCheckout);
+    }
+
+    private void setupRecyclerView() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new CartAdapter(getContext());
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void loadCartItems() {
+        cartItems = dbHelper.getCartItems(customerId);
+
+        if (cartItems.isEmpty()) {
+            tvEmptyCart.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+            tvTotalAmount.setVisibility(View.GONE);
+            btnCheckout.setVisibility(View.GONE);
+        } else {
+            tvEmptyCart.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            tvTotalAmount.setVisibility(View.VISIBLE);
+            btnCheckout.setVisibility(View.VISIBLE);
+
+            adapter.setCartItems(cartItems);
+            calculateTotal();
+        }
+    }
+
+    private void calculateTotal() {
+        double total = 0;
+        for (CartItem item : cartItems) {
+            total += item.getTotalPrice();
+        }
+        tvTotalAmount.setText("Total: $" + String.format("%.2f", total));
+    }
+
+    private void showCheckoutDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_checkout, null);
+
+        TextView tvMessage = dialogView.findViewById(R.id.tvCheckoutMessage);
+        Button btnConfirm = dialogView.findViewById(R.id.btnConfirmCheckout);
+        Button btnCancel = dialogView.findViewById(R.id.btnCancelCheckout);
+
+        tvMessage.setText("Safe Paddle!\n\nConfirm your rental booking?");
+
+        AlertDialog dialog = builder.setView(dialogView).create();
+
+        btnConfirm.setOnClickListener(v -> {
+            processCheckout();
+            dialog.dismiss();
+        });
+
+        btnCancel.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
+    }
+
+    private void processCheckout() {
+        String currentDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
+
+        // Move cart items to rental history
+        for (CartItem cartItem : cartItems) {
+            RentalHistory rentalHistory = new RentalHistory(
+                    cartItem.getCustomerId(),
+                    cartItem.getBicycleId(),
+                    cartItem.getStartDate(),
+                    cartItem.getEndDate(),
+                    cartItem.getTotalPrice(),
+                    currentDate
+            );
+            dbHelper.addToRentalHistory(rentalHistory);
+        }
+
+        // Clear cart
+        dbHelper.clearCart(customerId);
+
+        Toast.makeText(getContext(), "Checkout successful! Enjoy your ride!", Toast.LENGTH_LONG).show();
+
+        // Refresh cart view
+        loadCartItems();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadCartItems();
     }
 }
