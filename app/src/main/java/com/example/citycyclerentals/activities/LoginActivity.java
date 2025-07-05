@@ -1,4 +1,4 @@
-package com.example.citycyclerentals;
+package com.example.citycyclerentals.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
