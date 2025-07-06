@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -27,7 +26,6 @@ import com.example.citycyclerentals.models.Customer;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Base64;
 import java.util.Calendar;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -109,10 +107,7 @@ public class ProfileFragment extends Fragment {
             // Load profile picture
             if (currentCustomer.getProfilePicture() != null && !currentCustomer.getProfilePicture().isEmpty()) {
                 try {
-                    byte[] decodedBytes = null;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        decodedBytes = Base64.getDecoder().decode(currentCustomer.getProfilePicture());
-                    }
+                    byte[] decodedBytes = android.util.Base64.decode(currentCustomer.getProfilePicture(), android.util.Base64.DEFAULT);
                     Bitmap bitmap = android.graphics.BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
                     ivProfilePicture.setImageBitmap(bitmap);
                 } catch (Exception e) {
@@ -185,9 +180,8 @@ public class ProfileFragment extends Fragment {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
         byte[] imageBytes = byteArrayOutputStream.toByteArray();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            return Base64.getEncoder().encodeToString(imageBytes);
-        }
-        return "";
+
+        // Use Android's Base64 class for better compatibility
+        return android.util.Base64.encodeToString(imageBytes, android.util.Base64.DEFAULT);
     }
 }

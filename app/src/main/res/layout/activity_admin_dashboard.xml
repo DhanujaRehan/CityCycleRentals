@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -47,7 +48,6 @@
             android:textStyle="bold"
             android:textColor="#FFFFFF"
             android:backgroundTint="#FFB823"
-            android:drawableLeft="@drawable/ic_add_bike"
             android:drawablePadding="16dp"
             android:paddingStart="24dp"
             android:gravity="start|center_vertical"
@@ -70,7 +70,6 @@
             android:textStyle="bold"
             android:textColor="#FFFFFF"
             android:backgroundTint="#708A58"
-            android:drawableLeft="@drawable/ic_customers"
             android:drawablePadding="16dp"
             android:paddingStart="24dp"
             android:gravity="start|center_vertical"

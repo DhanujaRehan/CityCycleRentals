@@ -135,4 +135,54 @@ public class BicycleAdapter extends RecyclerView.Adapter<BicycleAdapter.BicycleV
             btnAddToCart = itemView.findViewById(R.id.btnAddToCart);
         }
     }
+
+    // Updated BicycleAdapter decode method
+    private void loadBicycleImage(ImageView imageView, String encodedImage) {
+        if (encodedImage != null && !encodedImage.isEmpty()) {
+            try {
+                // Use Android's Base64 class instead of java.util.Base64
+                byte[] decodedBytes = android.util.Base64.decode(encodedImage, android.util.Base64.DEFAULT);
+                Bitmap bitmap = android.graphics.BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+
+                if (bitmap != null) {
+                    Bitmap scaledBitmap = createScaledBitmap(bitmap, 200, 200);
+                    imageView.setImageBitmap(scaledBitmap);
+
+                    if (bitmap != scaledBitmap) {
+                        bitmap.recycle();
+                    }
+                } else {
+                    imageView.setImageResource(R.drawable.ic_bike);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                imageView.setImageResource(R.drawable.ic_bike);
+            }
+        } else {
+            imageView.setImageResource(R.drawable.ic_bike);
+        }
+    }
+
+    // Updated CustomerAdapter decode method
+    private void loadProfilePicture(ImageView imageView, String encodedImage) {
+        if (encodedImage != null && !encodedImage.isEmpty()) {
+            try {
+                byte[] decodedBytes = android.util.Base64.decode(encodedImage, android.util.Base64.DEFAULT);
+                Bitmap bitmap = android.graphics.BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+                if (bitmap != null) {
+                    imageView.setImageBitmap(bitmap);
+                } else {
+                    imageView.setImageResource(R.drawable.ic_person);
+                }
+            } catch (Exception e) {
+                imageView.setImageResource(R.drawable.ic_person);
+            }
+        } else {
+            imageView.setImageResource(R.drawable.ic_person);
+        }
+    }
+
+// Replace all java.util.Base64 imports with:
+// Use android.util.Base64.decode(string, android.util.Base64.DEFAULT) instead of java.util.Base64.getDecoder().decode(string)
+
 }

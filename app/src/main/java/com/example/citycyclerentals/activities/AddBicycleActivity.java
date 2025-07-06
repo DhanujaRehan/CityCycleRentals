@@ -22,7 +22,6 @@ import com.example.citycyclerentals.models.Bicycle;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Base64;
 
 public class AddBicycleActivity extends AppCompatActivity {
 
@@ -126,10 +125,9 @@ public class AddBicycleActivity extends AppCompatActivity {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
         byte[] imageBytes = byteArrayOutputStream.toByteArray();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            return Base64.getEncoder().encodeToString(imageBytes);
-        }
-        return "";
+
+        // Use Android's Base64 class for better compatibility
+        return android.util.Base64.encodeToString(imageBytes, android.util.Base64.DEFAULT);
     }
 
     @Override
