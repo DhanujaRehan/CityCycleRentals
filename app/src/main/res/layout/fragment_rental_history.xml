@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FFF1CA">
+    android:background="@color/main_color">
 
     <TextView
         android:layout_width="match_parent"
@@ -11,7 +11,7 @@
         android:text="Rental History"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:textColor="#2D4F2B"
+        android:textColor="@color/fourth_color"
         android:padding="16dp"
         android:gravity="center" />
 
@@ -22,7 +22,7 @@
         android:layout_weight="1"
         android:text="No rental history yet\nStart renting bicycles to see your history!"
         android:textSize="18sp"
-        android:textColor="#708A58"
+        android:textColor="@color/third_color"
         android:gravity="center"
         android:visibility="gone" />
 

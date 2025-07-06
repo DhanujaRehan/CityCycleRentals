@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF1CA">
+    android:background="@color/main_color">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:text="My Profile"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="#2D4F2B"
+            android:textColor="@color/fourth_color"
             android:gravity="center"
             android:layout_marginBottom="24dp" />
 
@@ -43,7 +43,7 @@
                 android:layout_height="40dp"
                 android:text="Change Picture"
                 android:textSize="12sp"
-                android:backgroundTint="#708A58"
+                android:backgroundTint="@color/third_color"
                 style="@style/Widget.MaterialComponents.Button" />
 
         </LinearLayout>
@@ -60,8 +60,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Username"
                 android:inputType="text"
-                android:textColor="#2D4F2B"
-                android:textColorHint="#708A58" />
+                android:textColor="@color/fourth_color"
+                android:textColorHint="@color/third_color" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -77,8 +77,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Email Address"
                 android:inputType="textEmailAddress"
-                android:textColor="#2D4F2B"
-                android:textColorHint="#708A58" />
+                android:textColor="@color/fourth_color"
+                android:textColorHint="@color/third_color" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,8 +94,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Phone Number"
                 android:inputType="phone"
-                android:textColor="#2D4F2B"
-                android:textColorHint="#708A58" />
+                android:textColor="@color/fourth_color"
+                android:textColorHint="@color/third_color" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -111,8 +111,8 @@
                 android:layout_height="wrap_content"
                 android:hint="ID Number"
                 android:inputType="text"
-                android:textColor="#2D4F2B"
-                android:textColorHint="#708A58" />
+                android:textColor="@color/fourth_color"
+                android:textColorHint="@color/third_color" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -128,7 +128,7 @@
                 android:layout_weight="1"
                 android:text="Birthday:"
                 android:textSize="16sp"
-                android:textColor="#2D4F2B"
+                android:textColor="@color/fourth_color"
                 android:layout_gravity="center_vertical" />
 
             <TextView
@@ -138,7 +138,7 @@
                 android:layout_weight="1"
                 android:text="Select Date"
                 android:textSize="14sp"
-                android:textColor="#708A58"
+                android:textColor="@color/third_color"
                 android:layout_gravity="center_vertical"
                 android:gravity="center" />
 
@@ -148,7 +148,7 @@
                 android:layout_height="40dp"
                 android:text="Select"
                 android:textSize="12sp"
-                android:backgroundTint="#708A58"
+                android:backgroundTint="@color/third_color"
                 style="@style/Widget.MaterialComponents.Button" />
 
         </LinearLayout>
@@ -160,8 +160,8 @@
             android:text="Save Profile"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#FFB823"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/secondary_color"
             style="@style/Widget.MaterialComponents.Button" />
 
     </LinearLayout>

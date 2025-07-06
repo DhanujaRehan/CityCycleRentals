@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FFF1CA"
+    android:background="@color/main_color"
     android:gravity="center">
 
     <ImageView
@@ -19,7 +19,7 @@
         android:text="CityCycle Rentals"
         android:textSize="32sp"
         android:textStyle="bold"
-        android:textColor="#2D4F2B"
+        android:textColor="@color/fourth_color"
         android:layout_marginBottom="8dp" />
 
     <TextView
@@ -27,12 +27,12 @@
         android:layout_height="wrap_content"
         android:text="Eco-friendly transportation for everyone"
         android:textSize="16sp"
-        android:textColor="#708A58"
+        android:textColor="@color/third_color"
         android:layout_marginBottom="48dp" />
 
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminateTint="#FFB823" />
+        android:indeterminateTint="@color/secondary_color" />
 
 </LinearLayout>

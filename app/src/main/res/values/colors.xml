@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="main_color">#F7CFD8</color>
-    <color name="secondary_color">#F4F8D3</color>
-    <color name="third_color">#A6D6D6</color>
-    <color name="fourth_color">#8E7DBE</color>
+    <color name="main_color">#410445</color>
+    <color name="secondary_color">#A5158C</color>
+    <color name="third_color">#FF2DF1</color>
+    <color name="fourth_color">#F6DC43</color>
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="gray">#808080</color>
     <color name="light_gray">#F5F5F5</color>
 
-    <color name="bottom_nav_selected">#2D4F2B</color>
-    <color name="bottom_nav_unselected">#708A58</color>
+    <color name="bottom_nav_selected">#F6DC43</color>
+    <color name="bottom_nav_unselected">#FF2DF1</color>
 </resources>

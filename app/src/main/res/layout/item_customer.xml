@@ -6,7 +6,7 @@
     android:layout_margin="8dp"
     app:cardCornerRadius="12dp"
     app:cardElevation="4dp"
-    android:background="#FFFFFF">
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,7 +38,7 @@
                 android:text="John Doe"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="#2D4F2B"
+                android:textColor="@color/fourth_color"
                 android:layout_marginBottom="4dp" />
 
             <TextView
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:text="john.doe@email.com"
                 android:textSize="14sp"
-                android:textColor="#708A58"
+                android:textColor="@color/third_color"
                 android:layout_marginBottom="2dp" />
 
             <TextView
@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:text="Phone: +1234567890"
                 android:textSize="12sp"
-                android:textColor="#708A58"
+                android:textColor="@color/third_color"
                 android:layout_marginBottom="2dp" />
 
             <TextView
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:text="ID: 123456789"
                 android:textSize="12sp"
-                android:textColor="#708A58"
+                android:textColor="@color/third_color"
                 android:layout_marginBottom="2dp" />
 
             <TextView
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:text="Birthday: 01/01/1990"
                 android:textSize="12sp"
-                android:textColor="#708A58" />
+                android:textColor="@color/third_color" />
 
         </LinearLayout>
 
@@ -83,7 +83,7 @@
             android:layout_height="wrap_content"
             android:text="ACTIVE"
             android:textSize="10sp"
-            android:textColor="#708A58"
+            android:textColor="@color/third_color"
             android:background="@drawable/status_background"
             android:padding="6dp"
             android:layout_gravity="top" />

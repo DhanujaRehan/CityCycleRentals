@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:text="Safe Paddle!\n\nConfirm your rental booking?"
         android:textSize="18sp"
-        android:textColor="#2D4F2B"
+        android:textColor="@color/fourth_color"
         android:gravity="center"
         android:layout_marginBottom="24dp" />
 
@@ -36,8 +36,8 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:text="Cancel"
-            android:textColor="#708A58"
-            android:backgroundTint="#FFFFFF"
+            android:textColor="@color/third_color"
+            android:backgroundTint="@color/white"
             android:layout_marginEnd="8dp"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
 
@@ -47,8 +47,8 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:text="Confirm"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#FFB823"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/secondary_color"
             android:layout_marginStart="8dp"
             style="@style/Widget.MaterialComponents.Button" />
 
